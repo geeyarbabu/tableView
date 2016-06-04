@@ -8,11 +8,23 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate
+{
+    @IBOutlet weak var tableview: UITableView!
 
+    
+    var arr=["1","2","3"]
+    var pickerview=UIPickerView()
+    
+    @IBOutlet weak var textField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        print("jjjj")
+        
+        pickerview.dataSource=self
+        pickerview.delegate=self
+        textField.inputView=pickerview
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +32,19 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return arr.count
+    }
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return arr[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        textField.text=arr[row]
+    }
 }
 
